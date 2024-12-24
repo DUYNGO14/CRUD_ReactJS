@@ -1,13 +1,12 @@
-import { IUser } from "../../../../interfaces";
-import { Box, Button } from "../../../Atoms";
-import ModalBlank from "../ModalBlank";
+import { IUser } from "../../../../../interfaces";
+import { Box, Button } from "../../../../Atoms";
+import ModalBlank from "../../ModalBlank";
 interface ModalUserDetailProps {
   user : IUser.UserResponse
   isShow: boolean;
   toggle: (typeModal: string) => void
 }
 const ModalUserDetail = ({ user, isShow, toggle }: ModalUserDetailProps) => {
-  console.log(user);
     return (
         <ModalBlank title="User Detail" isShow={isShow} toggle={toggle}>
           <Box>

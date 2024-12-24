@@ -27,7 +27,7 @@ const TableUserContainer = () => {
 
     useEffect (() => {
       handleViewUser(user);
-    },[])
+    },[isShow])
     const handleViewUser = async (user: IUser.UserResponse) => {
       await UserService.getById(+user.id).then((res) => {
         if(res && res.data) {
