@@ -1,3 +1,4 @@
 import * as Table from "./Tables";   
-import Sidebar from "./Sidebar";
-export { Table, Sidebar };     
+import * as Modal from "./Modal";
+import Header from "./Header";
+export { Table, Modal, Header };     

@@ -13,7 +13,14 @@ const UserService = {
     },
     create: async (data: IUser.UserRequest) => {
         return await axios.post('/users', data);
-    }
+    },
+    update: async (id: number, data: IUser.UserRequest) => {
+        return await axios.put(`/users/${id}`, data);
+    },
+    delete: async (id: number) => {
+        const response = await axios.delete(`/users/${id}`);
+        return response
+    },
 }
 
 export default UserService
