@@ -1,3 +1,4 @@
-import * as DashboardPage from "./Dashboard";
+import UserPage from "./User";
 
-export { DashboardPage };
+
+export { UserPage };

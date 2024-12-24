@@ -1,4 +1,4 @@
-import { Table } from "../../../Organisms"
+import { Table } from "../../Organisms"
 
 
 const UserPage = () => {

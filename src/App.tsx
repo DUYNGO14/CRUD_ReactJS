@@ -1,11 +1,11 @@
-import { DashboardPage } from "./Components/Pages"
-
+import { Header } from "./Components/Organisms"
+import { UserPage } from "./Components/Pages"
 function App() {
  
   return (
     <>
-      <DashboardPage.UserPage />
-      
+      <Header />
+      <UserPage />
     </>
   )
 }

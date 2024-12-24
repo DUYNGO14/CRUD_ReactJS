@@ -16,8 +16,10 @@ const TableUserContainer = () => {
     const [user,setUser] = useState<IUser.UserResponse|unknown>({})
     const [typeModal, setTypeModal] = useState<string>('')
 
-    const handleToggle = () => {
+    const handleToggle = (modalType?: string) => {
+      setTypeModal(modalType||'')
       setIsShowing(!isShow)
+      setUser({})
     }
     useEffect (() => {
        getAllUsers()
@@ -26,40 +28,27 @@ const TableUserContainer = () => {
     useEffect (() => {
       handleViewUser(user);
     },[])
-
-    useEffect (() => {
-      handleUpdate(user);
-    },[])
-
-    useEffect (() => {
-      handleDelete(user);
-    },[])
-
-    const handleViewUser = (user: IUser.UserResponse) => {
-      UserService.getById(+user.id).then((res) => {
+    const handleViewUser = async (user: IUser.UserResponse) => {
+      await UserService.getById(+user.id).then((res) => {
         if(res && res.data) {
           setUser(res.data)
         }else {
-          ToastUtils.error('View user failed');
+          setIsShowing(false)
+          ToastUtils.error('User not found');
         }
       })
-      console.log(user);
-      
     }
-    const handleUpdate = (user: IUser.UserResponse) => {
-     
-    }
-    const handleDelete = (user: IUser.UserResponse) => {
-      
-    }
+
     const getAllUsers = async () => {
       const res = await UserService.getAll(page)
-      setPage(+res.page)
-      setPerPage(+res.per_page)
-      setTotal(+res.total)
-      setTotalPage(+res.total_pages)
       if(res && res.data) {
         setUsers(res.data)
+        setPage(+res.page)
+        setPerPage(+res.per_page)
+        setTotal(+res.total)
+        setTotalPage(+res.total_pages)
+      }else{
+        ToastUtils.error('Error')
       }
     }
     return (
@@ -70,10 +59,9 @@ const TableUserContainer = () => {
             toggle={handleToggle}
             handleViewUser={handleViewUser}
             typeModal={typeModal}
-            handleUpdate={handleUpdate}
-            handleDelete={handleDelete} 
             user = {user} 
             setTypeModal={setTypeModal}
+            setUsers={setUsers}
           />
             <Pagination page={page} per_page={per_page} total={total} total_pages={totalPage} setPage={setPage}/>
         </div>

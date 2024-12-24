@@ -1,23 +1,24 @@
 
+import { ToastContainer } from "react-toastify";
 import { IUser } from "../../../../interfaces"
 import { Box, Button } from "../../../Atoms"
-import { ModalUserDetail } from "../../Modal";
+import { ModalDelete, ModalUpdate, ModalUserDetail } from "../../Modal";
 import ModalCreate from "../../Modal/ModalCreate";
 
 interface UserPresenterProps {
     users: IUser.UserResponse[];
     isShow : boolean;
-    toggle:()=> void;
+    toggle:(modalType?: string)=> void;
     handleViewUser: (user: IUser.UserResponse) => void
-    handleUpdate: (user: IUser.UserResponse) => void
-    handleDelete: (user: IUser.UserResponse) => void
     typeModal: string;
     user: IUser.UserResponse;
     setTypeModal: React.Dispatch<React.SetStateAction<string>>
+    setUsers: React.Dispatch<React.SetStateAction<IUser.UserResponse[]>>
 }
 
 
-const TableUserPresenter = ({ users, isShow, toggle,handleViewUser, handleUpdate, handleDelete, typeModal , user,setTypeModal}: UserPresenterProps) => {
+const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleViewUser,setUsers}: UserPresenterProps) => {
+
     return (
         <>
             <Box className="max-w-screen-xl mx-auto px-4 md:px-8 mt-12">
@@ -26,10 +27,9 @@ const TableUserPresenter = ({ users, isShow, toggle,handleViewUser, handleUpdate
                         <h3 className="text-gray-800 text-xl font-bold sm:text-2xl">
                             List User
                         </h3>
-                    
                     </Box>
                     <Box className="mt-3 md:mt-0">
-                        <Button onClick={() => {toggle();setTypeModal("create") } } className="px-3 py-1.5 text-sm text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg">Add user</Button>
+                        <Button onClick={() => {toggle("create") } } className="px-3 py-1.5 text-sm text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg">Add user</Button>
                     </Box>
                 </Box>
                 <Box className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
@@ -55,19 +55,19 @@ const TableUserPresenter = ({ users, isShow, toggle,handleViewUser, handleUpdate
                                         <td className="px-6 py-4 whitespace-nowrap">{item.last_name}</td>
                                         <td className="text-center px-6 whitespace-nowrap">
                                             <Button
-                                                onClick={() => {setTypeModal("view"); handleViewUser(item); toggle()}}
+                                                onClick={() => { toggle("view"); handleViewUser(item) }}
                                                 className="py-2 leading-none px-3 font-medium text-lime-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
                                             >
                                                 View
                                             </Button>
                                             <Button
-                                                onClick={() => {setTypeModal("update"); toggle()}}  
+                                                onClick={() => { toggle("update"); handleViewUser(item)}}  
                                                 className="py-2 leading-none px-3 font-medium text-blue-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
                                             >
                                                 Update
                                             </Button>
                                             <Button  
-                                                onClick={() => {setTypeModal("delete"); toggle()}}  
+                                                onClick={() => { toggle("delete"); handleViewUser(item) }}  
                                                 className="py-2 leading-none px-3 font-medium text-black hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
                                             >
                                                 Delete
@@ -80,9 +80,11 @@ const TableUserPresenter = ({ users, isShow, toggle,handleViewUser, handleUpdate
                     </table>
                 </Box>
             </Box>
+            <ToastContainer />
             {typeModal === "view" && <ModalUserDetail user={user} isShow={isShow} toggle={toggle} />}
-            {typeModal == "create" && <ModalCreate isShow={isShow} toggle={toggle} />}
-           
+            {typeModal == "create" && <ModalCreate isShow={isShow} toggle={toggle} setUsers={setUsers}/>}
+            {typeModal == "update" && <ModalUpdate userData={user} isShow={isShow} toggle={toggle} setUsers={setUsers} />}
+            {typeModal == "delete" && <ModalDelete user={user} isShow={isShow} toggle={toggle} setUsers={setUsers}  />}
         </>
     )
 }
