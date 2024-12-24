@@ -1,6 +1,6 @@
 import { Header } from "../../Components/Organisms";
 
-const HomePage = () => {
+const LandingPage = () => {
     return (
         <div>
             <Header /> 
@@ -8,4 +8,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default LandingPage

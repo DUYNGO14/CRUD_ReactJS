@@ -4,6 +4,7 @@ import { UserService } from "../../../../service"
 import { Pagination } from "../../../Molecules"
 import { ToastUtils } from "../../../../utils"
 import { IUser } from "../../../../interfaces"
+import { set } from "nprogress"
 
 
 const TableUserContainer = () => {
@@ -15,11 +16,10 @@ const TableUserContainer = () => {
     const [isShow , setIsShowing] = useState(false)
     const [user,setUser] = useState<IUser.UserResponse|unknown>({})
     const [typeModal, setTypeModal] = useState<string>('')
-
+    const [loading, setLoading] = useState<boolean>(false)
     const handleToggle = (modalType?: string) => {
       setTypeModal(modalType||'')
       setIsShowing(!isShow)
-      setUser({})
     }
     useEffect (() => {
        getAllUsers()
@@ -27,7 +27,7 @@ const TableUserContainer = () => {
 
     useEffect (() => {
       handleViewUser(user);
-    },[isShow])
+    },[])
     const handleViewUser = async (user: IUser.UserResponse) => {
       await UserService.getById(+user.id).then((res) => {
         if(res && res.data) {
@@ -40,6 +40,7 @@ const TableUserContainer = () => {
     }
 
     const getAllUsers = async () => {
+      setLoading(true)
       const res = await UserService.getAll(page)
       if(res && res.data) {
         setUsers(res.data)
@@ -50,9 +51,10 @@ const TableUserContainer = () => {
       }else{
         ToastUtils.error('Error')
       }
+      setLoading(false)
     }
     return (
-        <div>
+        <>
             <TableUserPresenter 
             users={users}
             isShow={isShow}
@@ -64,7 +66,7 @@ const TableUserContainer = () => {
             setUsers={setUsers}
           />
             <Pagination page={page} per_page={per_page} total={total} total_pages={totalPage} setPage={setPage}/>
-        </div>
+        </>
     )
 }
 

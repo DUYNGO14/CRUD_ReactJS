@@ -1,15 +1,38 @@
-import { Box, Button } from "../../Atoms";
+import { Box, Button, Paragraph } from "../../Atoms";
 import { Route, Routes, Link } from "react-router";
 import { HomePage, ResourcePage, UserPage } from "../../Pages";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginForm } from "../Form";
 const Header=()=>{
     const [state, setState] = useState(false)
+    const [userLogin, setUserLogin] = useState({})
+    const [isLogin, setIsLogin] = useState<boolean>(false)
+    const handleLogin = () => {
+        const token = localStorage.getItem('token');
+        if(token) {
+            setIsLogin(true)
+        }
+        const user = localStorage.getItem('user');
+        if(user) {
+            setUserLogin(JSON.parse(user))
+        }
+    }
+
+    useEffect(() => {
+        handleLogin()
+    },[])
     // Replace javascript:void(0) paths with your paths
     const navigation = [
         { title: "User", to: "/users" },
         { title: "Resources", to : "/resources" },
     ]
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        setIsLogin(false)
+        setUserLogin(false)
+    }
+    console.log(userLogin);
     return (
         <>
         <nav className={`bg-white pb-5 md:text-sm border-b-2 border-indigo-200 ${state ? "shadow-lg rounded-xl border mx-2 mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0" : ""}`}>
@@ -47,13 +70,25 @@ const Header=()=>{
                         }
                     </ul>
                     <Box className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
-                    
-                        <Link to="/login" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                            Log in
-                        </Link>
-                        <Link to="/register" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                            Register
-                        </Link>
+                        {
+                        isLogin == false ? (
+                            <>
+                                <Link to="/login" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
+                                    Login
+                                </Link>
+                                <Link to="/register" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
+                                    Register
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                           
+                            <Paragraph text={userLogin.email} />
+                            <Link to="/" onClick={handleLogout} className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
+                                    Logout
+                            </Link>
+                            </>
+                        )}
                     </Box>
                 </Box>
             </Box>

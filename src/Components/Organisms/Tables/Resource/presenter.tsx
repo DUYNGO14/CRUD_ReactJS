@@ -15,6 +15,7 @@ interface UserPresenterProps {
 const TableResourcePresenter = ({ resources, toggle, getResourceById, isShow,resource}: UserPresenterProps) => {
     return (
         <>
+            
             <Box className="max-w-screen-xl mx-auto px-4 md:px-8 mt-12">
                 <Box className="items-start justify-center md:flex">
                     <Box className="max-w-lg">
@@ -63,7 +64,6 @@ const TableResourcePresenter = ({ resources, toggle, getResourceById, isShow,res
                 </Box>
                 <ModalDetail.ModalResourceDetail isShow={isShow} toggle={toggle} resource={resource}/>
             </Box>
-            
             <ToastContainer />
         </>
     )
