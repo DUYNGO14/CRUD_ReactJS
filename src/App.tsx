@@ -1,11 +1,11 @@
+import { BrowserRouter } from "react-router"
 import { Header } from "./Components/Organisms"
-import { UserPage } from "./Components/Pages"
 function App() {
- 
   return (
     <>
-      <Header />
-      <UserPage />
+      <BrowserRouter>
+          <Header />
+      </BrowserRouter>
     </>
   )
 }

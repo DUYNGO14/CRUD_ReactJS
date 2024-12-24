@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
 import { Box, Button } from "../../Atoms";
+import { Route, Routes, Link } from "react-router";
+import { HomePage, ResourcePage, UserPage } from "../../Pages";
+import { useState } from "react";
 const Header=()=>{
     const [state, setState] = useState(false)
-
     // Replace javascript:void(0) paths with your paths
     const navigation = [
-        { title: "User", path: "javascript:void(0)" },
-        { title: "Resources", path: "javascript:void(0)" },
+        { title: "User", to: "/users" },
+        { title: "Resources", to : "/resources" },
     ]
 
-    useEffect(() => {
-        document.onclick = (e) => {
-            const target = e.target;
-            if (!target.closest(".menu-btn")) setState(false);
-        };
-    }, [])
-
     return (
-        <nav className={`bg-white pb-5 md:text-sm ${state ? "shadow-lg rounded-xl border mx-2 mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0" : ""}`}>
+        <>
+        <nav className={`bg-white pb-5 md:text-sm border-b-2 border-indigo-200 ${state ? "shadow-lg rounded-xl border mx-2 mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0" : ""}`}>
             <Box className="gap-x-14 items-center max-w-screen-xl mx-auto px-4 md:flex md:px-8">
                 <Box className="flex items-center justify-between py-5 md:block">
                     <a href="javascript:void(0)">
-                        <h2 className="text-2xl font-bold text-gray-800">Logo</h2>
+                        <Link to="/" className="text-2xl font-bold text-gray-800">Logo</Link>
                     </a>
                     <Box className="md:hidden">
                         <Button className="menu-btn text-gray-500 hover:text-gray-800"
@@ -46,10 +41,8 @@ const Header=()=>{
                         {
                             navigation.map((item, idx) => {
                                 return (
-                                    <li key={idx} className="text-gray-700 hover:text-gray-900">
-                                        <a href={item.path} className="block">
-                                            {item.title}
-                                        </a>
+                                    <li key={idx} className="text-gray-700 hover:text-green-900 hover:border-b-2 hover:border-green-900 ">
+                                        <Link className="font-bold text-lg" to={item.to}>{item.title}</Link>
                                     </li>
                                 )
                             })
@@ -57,18 +50,23 @@ const Header=()=>{
                     </ul>
                     <Box className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
                     
-                        <a href="javascript:void(0)" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
+                        <Link to="/login" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
                             Log in
-                        </a>
-                        <a href="javascript:void(0)" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                            Sign in
-                        </a>
+                        </Link>
+                        <Link to="/register" className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
+                            Register
+                        </Link>
                     </Box>
                 </Box>
             </Box>
         </nav>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/users" element={<UserPage  />} />
+                <Route path="/resources" element={<ResourcePage />} />
+            </Routes>
+        </>
     )
 }
-
 
 export default Header

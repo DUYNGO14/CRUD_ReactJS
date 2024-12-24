@@ -1,7 +1,7 @@
 import ModalBlank from "./ModalBlank";
-import ModalUserDetail from "./ModalDetail/UserDetail";
-import ModalCreate from "./ModalCreate";
-import ModalDelete from "./ModalDelete";
-import ModalUpdate from "./ModalUpdate";
-export { ModalBlank, ModalUserDetail, ModalCreate, ModalDelete, ModalUpdate };
+import * as ModalDetail from "./ModalDetail";
+import * as ModalCreate from "./ModalCreate";
+import * as ModalDelete from "./ModalDelete";
+import * as ModalUpdate from "./ModalUpdate";
+export { ModalBlank, ModalDetail, ModalCreate, ModalDelete, ModalUpdate };
 

@@ -2,8 +2,8 @@
 import { ToastContainer } from "react-toastify";
 import { IUser } from "../../../../interfaces"
 import { Box, Button } from "../../../Atoms"
-import { ModalDelete, ModalUpdate, ModalUserDetail } from "../../Modal";
-import ModalCreate from "../../Modal/ModalCreate";
+import { ModalCreate, ModalDelete, ModalDetail, ModalUpdate } from "../../Modal";
+
 
 interface UserPresenterProps {
     users: IUser.UserResponse[];
@@ -36,6 +36,7 @@ const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleView
                     <table className="w-full table-auto text-sm text-left">
                         <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                             <tr>
+                                <th className="py-3 px-6">ID</th>
                                 <th className="py-3 px-6">Avatar</th>
                                 <th className="py-3 px-6">Email</th>
                                 <th className="py-3 px-6">First Name</th>
@@ -47,6 +48,7 @@ const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleView
                             {
                                 users.map((item, idx) => (
                                     <tr key={idx}>
+                                        <td className="px-6 py-4 whitespace-nowrap">{item.id}</td>
                                         <td className="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
                                             <img src={item.avatar} className="w-11 h-11 rounded-full" />
                                         </td>
@@ -81,10 +83,10 @@ const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleView
                 </Box>
             </Box>
             <ToastContainer />
-            {typeModal === "view" && <ModalUserDetail user={user} isShow={isShow} toggle={toggle} />}
-            {typeModal == "create" && <ModalCreate isShow={isShow} toggle={toggle} setUsers={setUsers}/>}
-            {typeModal == "update" && <ModalUpdate userData={user} isShow={isShow} toggle={toggle} setUsers={setUsers} />}
-            {typeModal == "delete" && <ModalDelete user={user} isShow={isShow} toggle={toggle} setUsers={setUsers}  />}
+            {typeModal === "view" && <ModalDetail.ModalUserDetail user={user} isShow={isShow} toggle={toggle} />}
+            {typeModal == "create" && <ModalCreate.ModalCreateUser isShow={isShow} toggle={toggle} setUsers={setUsers}/>}
+            {typeModal == "update" && <ModalUpdate.ModalUpadteUser userData={user} isShow={isShow} toggle={toggle} setUsers={setUsers} />}
+            {typeModal == "delete" && <ModalDelete.ModalDeleteUser user={user} isShow={isShow} toggle={toggle} setUsers={setUsers}  />}
         </>
     )
 }

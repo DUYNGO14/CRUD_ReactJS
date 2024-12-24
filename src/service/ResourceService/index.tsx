@@ -6,6 +6,10 @@ const ResourceService = {
         const response = await axios.get(`/unknown?page=${page}&per_page=${PAGINATION_CONSTANTS.DEFAULT_PAGE_SIZE}`);
         return response;
     },
+    getById: async (id: number) => {
+        const response = await axios.get(`/unknown/${id}`);
+        return response;    
+    },
 }   
 
 export default ResourceService
