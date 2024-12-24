@@ -2,6 +2,7 @@ import { Box, Button } from "../../Atoms";
 import { Route, Routes, Link } from "react-router";
 import { HomePage, ResourcePage, UserPage } from "../../Pages";
 import { useState } from "react";
+import { LoginForm } from "../Form";
 const Header=()=>{
     const [state, setState] = useState(false)
     // Replace javascript:void(0) paths with your paths
@@ -9,15 +10,12 @@ const Header=()=>{
         { title: "User", to: "/users" },
         { title: "Resources", to : "/resources" },
     ]
-
     return (
         <>
         <nav className={`bg-white pb-5 md:text-sm border-b-2 border-indigo-200 ${state ? "shadow-lg rounded-xl border mx-2 mt-2 md:shadow-none md:border-none md:mx-2 md:mt-0" : ""}`}>
             <Box className="gap-x-14 items-center max-w-screen-xl mx-auto px-4 md:flex md:px-8">
                 <Box className="flex items-center justify-between py-5 md:block">
-                    <a href="javascript:void(0)">
-                        <Link to="/" className="text-2xl font-bold text-gray-800">Logo</Link>
-                    </a>
+                    <Link to="/" className="text-2xl font-bold text-gray-800">Logo</Link>
                     <Box className="md:hidden">
                         <Button className="menu-btn text-gray-500 hover:text-gray-800"
                             onClick={() => setState(!state)}
@@ -61,6 +59,7 @@ const Header=()=>{
             </Box>
         </nav>
             <Routes>
+                <Route path="/login" element={<LoginForm/>} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="/users" element={<UserPage  />} />
                 <Route path="/resources" element={<ResourcePage />} />
