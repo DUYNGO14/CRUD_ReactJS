@@ -5,8 +5,8 @@ const AuthService = {
     login: async (data: IAuth.LoginRequest) => {
         return await axios.post('/login', data);
     },
-    register: async (email: string, password: string) => {
-        return await axios.post('/register', { email, password });
+    register: async (data: IAuth.RegisterRequest) => {
+        return await axios.post('/register', data);
     },
  };
 
