@@ -1,10 +1,8 @@
 import { Route, Routes } from "react-router"
-import AuthLayout from "../Layout/AuthLayout"
 import { Home, Login, Register, Resource, User } from "../Pages"
-import HomeLayout from "../Layout/HomeLayout"
+import {HomeLayout, AuthLayout} from "../Layout"
 
 const AppRouter = () => {
-
     return (
         <Routes>
                 <Route path="/login" element={

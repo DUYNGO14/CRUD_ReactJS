@@ -5,10 +5,11 @@ interface LoginPresenterProps {
     user : IAuth.LoginRequest
     onSubmit: () => void
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    loginError: number
     loading: boolean
+    error: string
 }
-const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange, user, loginError,loading}) => {
+const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange, user,loading,error}) => {
+    console.log(error);
     return (
     <>  
         <main className="w-full flex flex-col items-center justify-center">
@@ -32,7 +33,7 @@ const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange,
                             placeholder="Email"
                             value={user.email}
                             onChange={handleChange}
-                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border hover:border-indigo-600 focus:border-indigo-600 shadow-sm rounded-lg"
                         />
                     </Box>
                     <Box>
@@ -43,10 +44,10 @@ const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange,
                             placeholder="Password"
                             value={user.password}
                             onChange={handleChange}
-                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border hover:border-indigo-600 focus:border-indigo-600 shadow-sm rounded-lg"
                         />
                     </Box>
-                    {loginError === 400 && <p className="text-left text-red-600">Email or password is invalid</p>}
+                    {error && <p className="text-left text-red-600">{error}</p>}
                     <Button
                         disabled={!user.email || !user.password || loading}
                         onClick={onSubmit}
@@ -70,6 +71,9 @@ const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange,
                         ) : (
                             'Login'
                         )}
+                    </Button>
+                    <Button className="w-full px-4 py-2 text-white font-medium rounded-lg duration-150 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600">
+                        <Link to='/' className='text-white'>Go back home</Link>
                     </Button>
                 </form>
                

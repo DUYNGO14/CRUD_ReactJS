@@ -7,9 +7,10 @@ import RegisterPresenter from "./presenter"
 
 const RegisterContainer = () => {
     const [user, setUser] = useState<IAuth.RegisterRequest>({});
-    const [registerError, setRegisterError] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
     const  navigate = useNavigate();
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     useEffect(() => {
         handleRegister()
     },[])
@@ -18,26 +19,37 @@ const RegisterContainer = () => {
         setUser((prev) => ({ ...prev, [name]: value }));
     }
     const handleRegister = async () => {
-        setRegisterError(0);
-        if(!user.email || !user.password) {
-            return
+        if (!user.email || !user.password) {
+            return;
+        }
+        if (regex.test(user.email) === false) {
+            setError('Email is not valid');
+            return;
+        }
+        if (user.password.length < 6) {
+            setError('Password must be at least 6 characters');
+            return;
         }
         setLoading(true);
-        const response = await AuthService.register(user);
-        console.log(response);
-        
-        if (response && response.id) {
-            ToastUtils.success('Register successfully');
-            navigate("/login");
-        }else{
-            if(response && response.status === 400) {
-                setRegisterError(response.status);
+        try {
+            const response = await AuthService.register(user);
+            if (response && response.id) {
+                // ToastUtils.success('Register successfully');
+                navigate("/login");
+            }else{
+                if(response && response.status === 400) {
+                    setError("Email is already in use 🤔");
+                }
             }
+        }catch (error) {
+            ToastUtils.error('An error occurred during register 😩');
+        }finally {
+            setLoading(false);
         }
-        setLoading(false);
+
     }
     return (
-        <RegisterPresenter user={user} handleChange={handleChange} onSubmit={handleRegister} registerError={registerError} loading={loading} />
+        <RegisterPresenter user={user} handleChange={handleChange} error={error} onSubmit={handleRegister} loading={loading} />
     )
 }
 
