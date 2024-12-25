@@ -1,13 +1,12 @@
-import { BrowserRouter } from "react-router"
-import { Header } from "./Components/Organisms"
+import { ToastContainer } from "react-toastify"
+import AppRouter from "./Routers"
 
 function App() {
  
   return (
     <>
-      <BrowserRouter>
-          <Header />
-      </BrowserRouter>
+          <ToastContainer />
+          <AppRouter/>
     </>
   )
 }

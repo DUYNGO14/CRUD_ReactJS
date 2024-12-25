@@ -14,10 +14,11 @@ interface UserPresenterProps {
     user: IUser.UserResponse;
     setTypeModal: React.Dispatch<React.SetStateAction<string>>
     setUsers: React.Dispatch<React.SetStateAction<IUser.UserResponse[]>>
+    isLoading: boolean
 }
 
 
-const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleViewUser,setUsers}: UserPresenterProps) => {
+const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleViewUser,setUsers, isLoading}: UserPresenterProps) => {
 
     return (
         <>
@@ -32,7 +33,31 @@ const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleView
                         <Button onClick={() => {toggle("create") } } className="px-3 py-1.5 text-sm text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg">Add user</Button>
                     </Box>
                 </Box>
-                <Box className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-64">
+                    <svg
+                        className="animate-spin h-10 w-10 text-indigo-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                        ></circle>
+                        <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8H4z"
+                        ></path>
+                    </svg>
+                </div>
+                ):(
+                    <Box className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
                     <table className="w-full table-auto text-sm text-left">
                         <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                             <tr>
@@ -81,6 +106,8 @@ const TableUserPresenter = ({ users, isShow, toggle, typeModal , user,handleView
                         </tbody>
                     </table>
                 </Box>
+                )}
+                
             </Box>
             <ToastContainer />
             {typeModal === "view" && <ModalDetail.ModalUserDetail user={user} isShow={isShow} toggle={toggle} />}

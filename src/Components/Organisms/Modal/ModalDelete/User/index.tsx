@@ -17,6 +17,7 @@ const ModalDeleteUser = ({ user, isShow, toggle ,setUsers }: ModalUserDetailProp
     },[])
     const handleDelete = (id: number) => {
         if(!id) return
+        
         UserService.delete(id).then(() => {
             ToastUtils.success('Delete user with id : ' + id + ' successfully');
             setUsers((prev) => prev.filter((item) => item.id !== id));

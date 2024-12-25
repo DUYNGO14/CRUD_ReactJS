@@ -4,7 +4,6 @@ import { UserService } from "../../../../service"
 import { Pagination } from "../../../Molecules"
 import { ToastUtils } from "../../../../utils"
 import { IUser } from "../../../../interfaces"
-import { set } from "nprogress"
 
 
 const TableUserContainer = () => {
@@ -20,6 +19,7 @@ const TableUserContainer = () => {
     const handleToggle = (modalType?: string) => {
       setTypeModal(modalType||'')
       setIsShowing(!isShow)
+      setUser({})
     }
     useEffect (() => {
        getAllUsers()
@@ -64,6 +64,7 @@ const TableUserContainer = () => {
             user = {user} 
             setTypeModal={setTypeModal}
             setUsers={setUsers}
+            isLoading={loading}
           />
             <Pagination page={page} per_page={per_page} total={total} total_pages={totalPage} setPage={setPage}/>
         </>

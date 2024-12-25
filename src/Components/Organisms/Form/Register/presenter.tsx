@@ -1,22 +1,21 @@
 import { Link } from "react-router";
 import { IAuth } from "../../../../interfaces";
 import { Box, Input, Label, Button } from "../../../Atoms";
-interface LoginPresenterProps {
-    user : IAuth.LoginRequest
+interface RegisterPresenterProps {
+    user : IAuth.RegisterRequest
     onSubmit: () => void
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    loginError: number
+    registerError: number
     loading: boolean
 }
-const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange, user, loginError,loading}) => {
+const RegisterPresenter : React.FC<RegisterPresenterProps> = ({onSubmit, handleChange, user, registerError,loading}) => {
     return (
     <>  
         <main className="w-full flex flex-col items-center justify-center">
             <Box className="max-w-sm mt-8 w-full text-gray-600 space-y-5">
                 <Box className="text-center pb-8">
                     <Box className="mt-5">
-                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Log in to your account</h3>
-                        <p>eve.holt@reqres.in</p>
+                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Register account</h3>
                     </Box>
                 </Box>
                 <form
@@ -46,7 +45,7 @@ const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange,
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
                     </Box>
-                    {loginError === 400 && <p className="text-left text-red-600">Email or password is invalid</p>}
+                    {registerError === 400 && <p className="text-left text-red-600">Register failed!</p>}
                     <Button
                         disabled={!user.email || !user.password || loading}
                         onClick={onSubmit}
@@ -68,16 +67,18 @@ const LoginPresenter : React.FC<LoginPresenterProps> = ({onSubmit, handleChange,
                                 <span>Loading...</span>
                             </div>
                         ) : (
-                            'Login'
+                            'Register'
                         )}
                     </Button>
                 </form>
                
-                <p className="text-center">Don't have an account? <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">Sign up</Link></p>
+                <p className="text-center">Do have an account? 
+                    <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Login</Link>
+                    </p>
             </Box>
         </main>
     </>
     )
 }
 
-export default LoginPresenter
+export default RegisterPresenter
