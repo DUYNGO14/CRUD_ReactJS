@@ -3,6 +3,7 @@ import './index.css'
 import App from './App.tsx'
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from 'react-router';
+
 createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <App />
