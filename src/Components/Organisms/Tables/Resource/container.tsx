@@ -21,7 +21,7 @@ const TableResourceContainer = () => {
 
     useEffect(() => {
         getResourceById(resource)
-    },[isShow])
+    },[])
 
     const getAllResources = async () => {
         const res = await ResourceService.getAll(page)

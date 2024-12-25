@@ -17,6 +17,9 @@ const UserService = {
     update: async (id: number, data: IUser.UserRequest) => {
         return await axios.put(`/users/${id}`, data);
     },
+    updatePatch: async (id: number, data: IUser.UserRequest) => {
+        return await axios.patch(`/users/${id}`, data);
+    },
     delete: async (id: number) => {
         const response = await axios.delete(`/users/${id}`);
         return response
